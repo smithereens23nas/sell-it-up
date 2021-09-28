@@ -12,6 +12,7 @@ class Collection {
   #Model
   #currentId
   #items
+
   constructor(model, startingData){
     this.#Model = model;
     this.#currentId = 0;
@@ -31,11 +32,15 @@ class Collection {
       return acc
     }, {})
   }
+
+  #generateId(){
+    return ++this.#currentId
+  }
   
-   /**
+  /**
    * @description Will return an array with all items availible in this.#items
    * @returns array
-   */
+  */
 
   find(callback){
     // return callback( this.#items )

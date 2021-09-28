@@ -18,12 +18,13 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'))
 
 /* == Routes == */
-app.get('/', function(req, res) {
+app.get('/', function (req, res, next ) {
+    console.log('response', res);
     res.send(`<h1>Welcome To Sell it Up</h3>`)
 })
 
 /* == index route == */
-app.get('/products', (req, res) => {
+app.get('/products', function (req, res) {
     products.find((products) => {
 
         const context = {
@@ -35,7 +36,7 @@ app.get('/products', (req, res) => {
 });
 
 /* == Show == */
-app.get('/products/:id', (req, res, next) => { 
+app.get('/products/:id', function (req, res, next) { 
     products.findById(req.params.id, ( error, foundProduct ) => {
         if (error) {
             console.log(error)
