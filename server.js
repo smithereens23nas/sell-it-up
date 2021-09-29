@@ -1,5 +1,6 @@
 /* == External modules == */
 const express = require('express');
+const methodOverride = require('method-override');
 // Global variables
 const PORT = 4000;
 
@@ -17,7 +18,9 @@ app.use(express.static('public'))
 // this should be near the top, above the routes
 app.use(express.urlencoded({ extended: false }));
 
+app.use(methodOverride('_method'));
 app.use('/products', productsCtrls);
+
 // Adding middlewear
 // app.use((req, res, next) => { 
 // 	// console.log('I run for all routes');    

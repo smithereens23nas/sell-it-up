@@ -26,28 +26,28 @@ class Collection {
  * @returns function;
 */
 
-create( data, callBack ) {
-  if (!data) return console.log("missing data in first argument");
+  create( data, callBack ) {
+    if (!data) return console.log("missing data in first argument");
 
-  if (typeof callBack !== "function") {
-    return console.log("missing function in second argument");
+    if (typeof callBack !== "function") {
+      return console.log("missing function in second argument");
+      }
+
+      let error, newItem;
+
+      const isEmpty = Object.keys(data).every(field => data[field] === "");
+
+    if (isEmpty) {
+      error = { message: `you have empty fields` };
+    } else {
+      
+      newItem = new this.#Model( data, this.#generateId());
+
+      this.#items[newItem.id] = newItem;
     }
 
-    let error, newItem;
-
-    const isEmpty = Object.keys(data).every(field => data[field] === "");
-
-  if (isEmpty) {
-    error = { message: `you have empty fields` };
-  } else {
-    
-    newItem = new this.#Model( data, this.#generateId());
-
-    this.#items[newItem.id] = newItem;
+    return callBack(error, newItem);
   }
-
-  return callBack(error, newItem);
-}
 
   /**
    * @description It will take an array as a argument 
@@ -96,6 +96,36 @@ create( data, callBack ) {
     }
 
     return callback(error, item)
+  }
+
+  findByIdAndUpdate( itemId, data, callBack ) {
+    let error = null;
+    const item = this.#items[itemId];
+
+    if (!item) {
+      error = { message: `item can't be found` };
+    } else {
+
+      this.#items[itemId] = {
+        ...item,
+        ...data
+      }
+
+    }
+
+    return callBack(error, this.#items[itemId]);
+  }
+
+  findByIdAndDelete( itemId, callBack ) {
+    let error = null;
+    const item = this.#items[itemId]
+    const isDeleted = delete this.#items[itemId];
+
+    if ( !isDeleted ) {
+      error = { message: `item with id "${itemId}" can't be found` };
+    }
+
+    return callBack(error, item);
   }
 }
 
