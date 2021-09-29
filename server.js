@@ -8,7 +8,6 @@ const app = express();
 
 const productsCtrls = require('./controllers/products_controllers');
 
-app.use('/products', productsCtrls);
 /* == App configs == */
 app.set('view engine', 'ejs');
 
@@ -18,6 +17,7 @@ app.use(express.static('public'))
 // this should be near the top, above the routes
 app.use(express.urlencoded({ extended: false }));
 
+app.use('/products', productsCtrls);
 // Adding middlewear
 // app.use((req, res, next) => { 
 // 	// console.log('I run for all routes');    
