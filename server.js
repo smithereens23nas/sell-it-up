@@ -4,9 +4,20 @@ const express = require('express');
 // Global variables
 const PORT = 4000;
 
+/* == Internal modules == */
 const products = require('./models/product_model');
+
 // Run my express dependency
 const app = express();
+
+/* == App configs == */
+app.set('view engine', 'ejs');
+
+/* == middlewares == */
+app.use(express.static('public'))
+
+// this should be near the top, above the routes
+app.use(express.urlencoded({ extended: false }));
 
 // Adding middlewear
 // app.use((req, res, next) => { 
@@ -16,21 +27,10 @@ const app = express();
 // });
 
 app.use((req, res, next) => {    
-	console.log(`${req.method} ${req.originalUrl}`);    
+	console.log('\x1b[36m%s\x1b[0m', `[${req.url}] ${req.method} - ${new Date().toLocaleTimeString()}`);
+       
 	next();
 });
-
-// this should be near the top, above the routes
-app.use(express.urlencoded({ extended: false }));
-
-/* == Internal modules == */
-
-
-/* == App configs == */
-app.set('view engine', 'ejs');
-
-/* == middlewares == */
-app.use(express.static('public'))
 
 /* == Routes == */
 app.get('/', function (req, res, next ) {
