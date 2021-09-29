@@ -2,18 +2,18 @@
 const express = require('express');
 
 // Global variables
-const products = require('./models/product_model');
 const PORT = 4000;
 
+const products = require('./models/product_model');
 // Run my express dependency
 const app = express();
 
 // Adding middlewear
-app.use((req, res, next) => { 
-	console.log('I run for all routes');    
+// app.use((req, res, next) => { 
+// 	// console.log('I run for all routes');    
 
-	next();
-});
+// 	next();
+// });
 
 app.use((req, res, next) => {    
 	console.log(`${req.method} ${req.originalUrl}`);    
