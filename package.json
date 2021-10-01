@@ -4,7 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch-sass": "sass --watch sass/main.scss public/styles/main.css",
+    "watch-nodemon": "nodemon",
+    "dev": "concurrently -n sass,server -c 'bgMagenta.bold,bgGreen.bold' 'npm:watch-sass' 'npm:watch-nodemon'"
   },
   "keywords": [],
   "author": "",
@@ -14,5 +16,8 @@
     "express": "^4.17.1",
     "method-override": "^3.0.0",
     "nodemon": "^2.0.13"
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.2"
   }
 }

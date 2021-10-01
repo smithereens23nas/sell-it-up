@@ -52,42 +52,6 @@ app.get('/', function (req, res, next ) {
 //     });
 // });
 
-// app.post('/products/', (req, res) => {
-//     products.create(req.body, (error, createdProduct) => {
-//         if (error) return console.log(error);
-  
-//         console.log(createdProduct);
-//       // redirect the user to the index route
-//       // since the index route is listening for GET requests
-//       // with a URL path of '/products', we just need to include
-//       // the URL path as the argument since the .redirect() method
-//       // has a default HTTP verb of GET.
-//         return res.redirect('/products');
-//     });
-//   });
-
-// // This is the page to our form to create a new product! :)
-// app.get('/products/new', (req, res) => { 
-//     res.render('new.ejs');
-// });
-
-// /* == Show == */
-// app.get('/products/:id', function (req, res, next) { 
-//     products.findById(req.params.id, ( error, foundProduct ) => {
-//         if (error) {
-//             console.log(error)
-//             req.error = error
-//             return next()
-//         };
-
-//         const context = {
-//             product: foundProduct,
-//         }
-
-//         res.render('product/show', context);
-//     });
-// });
-
 // 404
 app.get("/*", (req, res) => {
     const context = { error: req.error };
