@@ -54,9 +54,6 @@ router.get('/:id', function (req, res, next) {
 });
 
 // edit route
-// this route will catch GET requests to /products/id/edit
-// and respond by rendering a form together with a product object
-
 router.get('/:productId/edit', (req, res) => {
     db.Product.findById(req.params.productId, (error, foundItem) => {
         if (error) return console.log(error);
