@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const products = require('../models/product_model');
+const db = require('../models');
 
 /* == Producs Routes == */
 
