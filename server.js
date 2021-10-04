@@ -8,6 +8,7 @@ const PORT = 4000;
 const app = express();
 
 const productsCtrls = require('./controllers/products_controllers');
+const reviewsCtrls = require('./controllers/reviews_controllers');
 
 /* == App configs == */
 app.set('view engine', 'ejs');
@@ -36,6 +37,7 @@ app.get('/', function (req, res) {
 
 /* == products == */
 app.use('/products', productsCtrls);
+app.use('/reviews', reviewsCtrls);
 
 /* == 404 == */
 app.get("/*", (req, res) => {
