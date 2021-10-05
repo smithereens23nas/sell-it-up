@@ -3,11 +3,11 @@ const express = require('express');
 const methodOverride = require('method-override');
 // Global variables
 const PORT = 4000;
+const controllers = require("./controllers");
 
 // Run my express dependency
 const app = express();
 
-const productsCtrls = require('./controllers/products_controllers');
 
 /* == App configs == */
 app.set('view engine', 'ejs');
@@ -23,9 +23,13 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(methodOverride('_method'));
 
+/* == use controllers == */
+app.use("/products", controllers.product);
+app.use("/reviews", controllers.review);
+
 /* == logger == */
 app.use((req, res, next) => {    
-	console.log(`[${req.url}] ${req.method} - ${new Date().toLocaleTimeString()}`);
+    console.log(`[${req.url}] ${req.method} - ${new Date().toLocaleTimeString()}`);
 	next();
 });
 
@@ -34,8 +38,6 @@ app.get('/', function (req, res) {
     res.redirect('/products');
 });
 
-/* == products == */
-app.use('/products', productsCtrls);
 
 /* == 404 == */
 app.get("/*", (req, res) => {
