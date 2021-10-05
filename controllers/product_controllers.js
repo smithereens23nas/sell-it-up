@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
-
-const db = require('../models');
+const { Product, Review } = require("../models");
 
 /* == Producs Routes == */
 
 /* == index route == */
 router.get('/', function (req, res) {
 
-  db.Product.find({}, (error, products) => {
+  Product.find({}, (error, products) => {
     if (error) return console.log(error);
 
     const context = {
@@ -27,7 +26,7 @@ router.get('/new', (req, res) => {
 // This is the post request coming from my newForm
 router.post('/', (req, res) => {
   console.log('req.body:', req.body);
- db.Product.create( req.body, (error, createdProduct) => {
+ Product.create( req.body, (error, createdProduct) => {
     if (error) return console.log(error);
 
     console.log(createdProduct);
@@ -37,25 +36,29 @@ router.post('/', (req, res) => {
 });
 
 /* == Show == */
-router.get('/:id', function (req, res, next) { 
-    db.Product.findById( req.params.id, ( error, foundProduct ) => {
-        if (error) {
-            console.log(error)
-            req.error = error
-            return next()
-        };
+router.get("/:id", (req, res, next) => {
+  Product.findById(req.params.id, (error, foundProduct) => {
+    if (error) {
+      console.log(error);
+      req.error = error;
+      return next();
+    }
+    // Here we are finding all the reviews where the product is 
+    //equal to the param
+    Review.find({ product: req.params.id }, (error, allReviews) => {
+      const context = {
+        product: foundProduct,
+        reviews: allReviews,
+      };
 
-        const context = {
-            product: foundProduct,
-        }
-
-        res.render('product/show', context);
+      return res.render("product/show.ejs", context);
     });
+  });
 });
 
 // edit route
 router.get('/:productId/edit', (req, res) => {
-    db.Product.findById(req.params.productId, (error, foundItem) => {
+    Product.findById(req.params.productId, (error, foundItem) => {
         if (error) return console.log(error);
     
         return res.render('edit.ejs', { product: foundItem });
@@ -65,7 +68,7 @@ router.get('/:productId/edit', (req, res) => {
 /* Update */
 router.put('/:productId', (req, res) => {
 
-  db.Product.findByIdAndUpdate(
+  Product.findByIdAndUpdate(
       req.params.productId,
      {
        $set: req.body
@@ -84,7 +87,7 @@ router.put('/:productId', (req, res) => {
 
 /* delete */
 router.delete('/:productId', (req, res) => {
-   db.Product.findByIdAndDelete( req.params.productId, (error, deletedProduct) => {
+   Product.findByIdAndDelete( req.params.productId, (error, deletedProduct) => {
         if (error) return console.log(error);
     
         console.log(deletedProduct);

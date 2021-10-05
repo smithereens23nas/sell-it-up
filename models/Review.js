@@ -12,6 +12,11 @@ const reviewSchema = new mongoose.Schema(
       type: String,
       required: [true, "You must provide a reason for your review score."],
     },
+    // relationship to product
+    product: {
+      type: mongoose.Types.ObjectId,
+      ref: "Product",
+    },    
   },
   {
     timestamps: true, // fields createdAt and updatedAt
