@@ -11,7 +11,7 @@ Review.deleteMany({}, function (error, deletedReviews) {
       {
         rating: 5,
         content: "Fast Delivery!",
-        product: "615b2cb8e3d673dc223bf665",
+        product: "615b331be3d673dc223bf66e",
       },
       {
         rating: 3,

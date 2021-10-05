@@ -12,9 +12,6 @@ const app = express();
 /* == App configs == */
 app.set('view engine', 'ejs');
 
-/* == DB connection == */
-require('./config/db.connection');
-
 /* == middlewares == */
 app.use(express.static('public'))
 
