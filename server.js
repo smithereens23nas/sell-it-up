@@ -1,8 +1,9 @@
 /* == External modules == */
+require('dotenv').config();
 const express = require('express');
 const methodOverride = require('method-override');
 // Global variables
-const PORT = 4000;
+const PORT = process.env.PORT;
 const controllers = require("./controllers");
 
 // Run my express dependency
@@ -42,4 +43,4 @@ app.get("/*", (req, res) => {
 });
 
 /* == My server listening for cool stuff to happen == */
-app.listen(PORT, () => console.log(`Listening for client requests on port ${PORT}`));
+app.listen(process.env.PORT || 3000);
