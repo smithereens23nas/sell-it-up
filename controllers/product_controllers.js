@@ -14,7 +14,7 @@ router.get('/', function (req, res) {
         products,
     }
 
-    res.render('product/index', context);
+    res.render('products/index', context);
   });
 });
 
@@ -51,7 +51,7 @@ router.get("/:id", (req, res, next) => {
         reviews: allReviews,
       };
 
-      return res.render("product/show.ejs", context);
+      return res.render("products/show.ejs", context);
     });
   });
 });

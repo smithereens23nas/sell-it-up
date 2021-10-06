@@ -34,23 +34,4 @@ Review.deleteMany({}, function (error, deletedReviews) {
   );
 });
 
-router.get('/', function (req, res) {
-
-  Review.find({}, (error, products) => {
-    if (error) return console.log(error);
-
-    const context = {
-        reviews,
-    }
-
-    res.render('review/index', context);
-  });
-});
-
-// This is the page to our form to create a new product! :)
-router.get('/new', (req, res) => { 
-  res.render('new.ejs');
-});
-
-
 module.exports = Review;

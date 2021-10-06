@@ -22,7 +22,6 @@ app.use(methodOverride('_method'));
 
 /* == use controllers == */
 app.use("/products", controllers.product);
-app.use("/reviews", controllers.review);
 
 /* == logger == */
 app.use((req, res, next) => {    
