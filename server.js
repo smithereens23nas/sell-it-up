@@ -8,7 +8,6 @@ const controllers = require("./controllers");
 // Run my express dependency
 const app = express();
 
-
 /* == App configs == */
 app.set('view engine', 'ejs');
 
@@ -20,8 +19,6 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(methodOverride('_method'));
 
-/* == use controllers == */
-app.use("/products", controllers.product);
 
 /* == logger == */
 app.use((req, res, next) => {    
@@ -33,6 +30,9 @@ app.use((req, res, next) => {
 app.get('/', function (req, res) {
     res.redirect('/products');
 });
+
+/* == use controllers == */
+app.use("/products", controllers.product);
 
 
 /* == 404 == */
