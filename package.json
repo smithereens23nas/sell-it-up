@@ -6,7 +6,8 @@
   "scripts": {
     "watch-sass": "sass --watch sass/main.scss public/styles/main.css",
     "watch-nodemon": "nodemon",
-    "dev": "concurrently -n sass,server -c 'bgMagenta.bold,bgGreen.bold' 'npm:watch-sass' 'npm:watch-nodemon'"
+    "dev": "concurrently -n sass,server -c 'bgMagenta.bold,bgGreen.bold' 'npm:watch-sass' 'npm:watch-nodemon'",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
