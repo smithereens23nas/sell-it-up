@@ -32,7 +32,7 @@ router.post("/", async function (req, res) {
     return res.redirect("/products");
   } catch (error) {
     return console.log(error);
-  }                     
+  }
 });
 
 /* == Show == */
@@ -41,7 +41,7 @@ router.get("/:id", async (req, res, next) => {
     const product = await Product.findById(req.params.id);
     const allReviews = await Review.find({ product: req.params.id });
     const context = {
-      product: product,          
+      product: product,
       reviews: allReviews,
     };
     return res.render("products/show.ejs", context);
@@ -68,36 +68,32 @@ router.get("/:productId/edit", async (req, res) => {
 /* Update */
 router.put("/:productId", async (req, res) => {
   try {
-   await Product.findByIdAndUpdate(
+    await Product.findByIdAndUpdate(
       req.params.productId,
       {
         $set: req.body,
       },
       {
         new: true,
-      });
+      }
+    );
     return res.redirect(`/products/${req.params.productId}`);
+  } catch (error) {
+    return console.log(error);
   }
-  catch (error){
-   return console.log(error);
-
-    }
-
 });
 
 /* delete */
-router.delete("/:id", (req, res, next) => {
-  Product.findByIdAndDelete(req.params.id, (error, deletedProduct) => {
-    if (error) {
-      console.log(error);
-      req.error = error;
-      return next();
-    }
-
-    Review.deleteMany({ product: req.params.id }, (error, deletedReviews) => {
-      return res.redirect("/products");
-    });
-  });
+router.delete("/:id", async (req, res, next) => {
+  try {
+    await Product.findByIdAndDelete(req.params.id);
+    await Review.deleteMany({ product: req.params.id });
+    return res.redirect("/products");
+  } catch (error) {
+    console.log(error);
+    req.error = error;
+    return next();
+  }
 });
 
 module.exports = router;

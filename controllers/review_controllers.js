@@ -38,48 +38,50 @@ router.post("/", function (req, res) {
 });
 
 /* delete */
-router.delete("/:id", (req, res, next) => {
-  Review.findByIdAndDelete(req.params.id, (error, deletedReview) => {
-    if (error) {
+router.delete("/:id", async (req, res, next) => {
+  try {
+    await Review.findByIdAndDelete(req.params.id);
+    return res.redirect("back");
+  }
+  catch(error){
       console.log(error);
       req.error = error;
       return next();
     }
 
-  });
 });
 
 
 //seed data - add in own product ID
-Review.deleteMany({}, function (error, deletedReviews) {
-  if (error) {
-    return console.log(error);
-  }
-  Review.insertMany(
-    [
-      {
-        rating: 5,
-        content: "Fast Delivery!",
-        product: "615dd35b94a188d6897c997d",
-      },
-      {
-        rating: 3,
-        content: "Took awhile to get here, but the product is great.",
-        product: "615dd35b94a188d6897c997d",
-      },
-      {
-        rating: 4,
-        content: "love the style of the products",
-        product: "615dd35b94a188d6897c997d",
-      },
-    ],
-    function (error, createdReviews) {
-      if (error) {
-        return console.log(error);
-      }
-      console.log("=== Seed Complete ===");
-      console.log(createdReviews);
-    }
-  );
-});
+// Review.deleteMany({}, function (error, deletedReviews) {
+//   if (error) {
+//     return console.log(error);
+//   }
+//   Review.insertMany(
+//     [
+//       {
+//         rating: 5,
+//         content: "Fast Delivery!",
+//         product: "6162188c71ecd3c3bfa33a77",
+//       },
+//       {
+//         rating: 3,
+//         content: "Took awhile to get here, but the product is great.",
+//         product: "6162188c71ecd3c3bfa33a77",
+//       },
+//       {
+//         rating: 4,
+//         content: "love the style of the products",
+//         product: "6162188c71ecd3c3bfa33a77",
+//       },
+//     ],
+//     function (error, createdReviews) {
+//       if (error) {
+//         return console.log(error);
+//       }
+//       console.log("=== Seed Complete ===");
+//       console.log(createdReviews);
+//     }
+//   );
+// });
 module.exports = router;
