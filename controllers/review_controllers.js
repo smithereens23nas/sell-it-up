@@ -2,6 +2,43 @@ const express = require('express');
 const router = express.Router();
 const { Product, Review } = require("../models");
 
+router.get("/", (req, res) => {
+  Review.find({})
+    .populate("product")
+    .exec((error, allReviews) => {
+      if (error) {
+        console.log(error);
+        req.error = error;
+        return next();
+      }
+			// Here we are requesting all the products to add into the context
+      Product.find({}, (error, allProducts) => {
+        if (error) {
+          console.log(error);
+          req.error = error;
+          return next();
+        }
+
+        const context = { reviews: allReviews, products: allProducts };
+        return res.render("reviews/index", context);
+      });
+    });
+});
+
+router.post("/", function (req, res) {
+  Review.create(req.body, function (error, createdReview) {
+    if (error) {
+      console.log(error);
+      req.error = error;
+      return next();
+    }
+
+    return res.redirect("/reviews");
+  });
+});
+
+
+//seed data - add in own product ID
 Review.deleteMany({}, function (error, deletedReviews) {
   if (error) {
     return console.log(error);
@@ -11,17 +48,17 @@ Review.deleteMany({}, function (error, deletedReviews) {
       {
         rating: 5,
         content: "Fast Delivery!",
-        product: "615b331be3d673dc223bf66e",
+        product: "615dd35b94a188d6897c997d",
       },
       {
         rating: 3,
         content: "Took awhile to get here, but the product is great.",
-        product: "615b2cb8e3d673dc223bf665",
+        product: "615dd35b94a188d6897c997d",
       },
       {
         rating: 4,
         content: "love the style of the products",
-        product: "615b2cb8e3d673dc223bf665",
+        product: "615dd35b94a188d6897c997d",
       },
     ],
     function (error, createdReviews) {
@@ -33,5 +70,4 @@ Review.deleteMany({}, function (error, deletedReviews) {
     }
   );
 });
-
-module.exports = Review;
+module.exports = router;

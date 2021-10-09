@@ -14,7 +14,7 @@ const app = express();
 app.set('view engine', 'ejs');
 
 /* == middlewares == */
-app.use(express.static('public'))
+app.use(express.static('public'));
 
 /* = this should be near the top, above the routes == */
 app.use(express.urlencoded({ extended: false }));
@@ -23,6 +23,7 @@ app.use(methodOverride('_method'));
 
 /* == use controllers == */
 app.use("/products", controllers.product);
+app.use("/reviews", controllers.review);
 
 /* == logger == */
 app.use((req, res, next) => {    
@@ -43,4 +44,4 @@ app.get("/*", (req, res) => {
 });
 
 /* == My server listening for cool stuff to happen == */
-app.listen(process.env.PORT || 3000);
+app.listen(PORT || 4000);
