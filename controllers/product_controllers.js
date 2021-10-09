@@ -66,21 +66,23 @@ router.get("/:productId/edit", async (req, res) => {
 });
 
 /* Update */
-router.put("/:productId/new", (req, res) => {
-  Product.findByIdAndUpdate(
-    req.params.productId,
-    {
-      $set: req.body,
-    },
-    {
-      new: true,
-    },
-    (error, updatedProduct) => {
-      if (error) return console.log(error);
+router.put("/:productId", async (req, res) => {
+  try {
+   await Product.findByIdAndUpdate(
+      req.params.productId,
+      {
+        $set: req.body,
+      },
+      {
+        new: true,
+      });
+    return res.redirect(`/products/${req.params.productId}`);
+  }
+  catch (error){
+   return console.log(error);
 
-      return res.redirect(`/products/${updatedProduct.id}`);
     }
-  );
+
 });
 
 /* delete */

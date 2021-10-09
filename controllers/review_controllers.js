@@ -37,6 +37,18 @@ router.post("/", function (req, res) {
   });
 });
 
+/* delete */
+router.delete("/:id", (req, res, next) => {
+  Review.findByIdAndDelete(req.params.id, (error, deletedReview) => {
+    if (error) {
+      console.log(error);
+      req.error = error;
+      return next();
+    }
+
+  });
+});
+
 
 //seed data - add in own product ID
 Review.deleteMany({}, function (error, deletedReviews) {
