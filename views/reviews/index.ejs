@@ -44,11 +44,13 @@
               </div>
               <div class="field">
                 <label for="" class="label">Product</label>
-              
+
                 <div class="select">
                   <select name="product">
                     <% products.forEach(product => { %>
-                    <option value="<%= product._id %>"><%= product.name %></option>
+                    <option value="<%= product._id %>">
+                      <%= product.name %>
+                    </option>
                     <% }) %>
                   </select>
                 </div>
@@ -92,18 +94,33 @@
                   <!--Add at bottom of card below the review content -->
                   <hr />
                   <a href="/products/<%=review.product._id%>">
-                    <%= review.product.name %></a>
+                    <%= review.product.name %></a
+                  >
                 </div>
               </div>
               <div class="media-right">
                 <section class="navbar-item has-dropdown is-hoverable">
                   <a class="navbar-link"></a>
                   <div class="navbar-dropdown">
-                    <a class="button is-primary m-2 navbar-item"> Edit </a>
+                    <a
+                      class="button is-primary m-2 navbar-item"
+                      href="/reviews/<%= review.id %>/edit"
+                    >
+                      Edit
+                    </a>
                     <hr class="navbar-divider" />
-                    <form action="/reviews/<%= review._id %>?_method=DELETE" method="POST">
-                      <input class="button is-danger m-2" type="submit" value="	Delete"/>                    
-                    </form></a>
+                    <form
+                      action="/reviews/<%= review._id %>?_method=DELETE"
+                      method="POST"
+                    >
+                      <button
+                        class="button is-danger m-2 navbar-item"
+                        type="submit"
+                        value="Delete"
+                      >
+                        Delete
+                      </button>
+                    </form>
                   </div>
                 </section>
               </div>

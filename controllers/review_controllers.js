@@ -1,40 +1,59 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const { Product, Review } = require("../models");
 
-router.get("/", (req, res) => {
-  Review.find({})
+router.get("/", async (req, res) => {
+  try {   
+    const allProducts = await Product.find({});
+    const allReviews = await Review.find({})
     .populate("product")
-    .exec((error, allReviews) => {
-      if (error) {
-        console.log(error);
-        req.error = error;
-        return next();
-      }
-			// Here we are requesting all the products to add into the context
-      Product.find({}, (error, allProducts) => {
-        if (error) {
-          console.log(error);
-          req.error = error;
-          return next();
-        }
-
-        const context = { reviews: allReviews, products: allProducts };
-        return res.render("reviews/index", context);
-      });
-    });
+    .exec(allProducts);
+    const context = { reviews: allReviews, products: allProducts };
+    return res.render("reviews/index", context);
+  } catch (error) {
+    console.log(error);
+    req.error = error;
+    return next();
+  }
 });
 
-router.post("/", function (req, res) {
-  Review.create(req.body, function (error, createdReview) {
-    if (error) {
-      console.log(error);
-      req.error = error;
-      return next();
-    }
+router.post("/", async (req, res, next) => {
+  try {
+    await Review.create(req.body);
+    return res.redirect("back");
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+});
 
+// edit route
+router.get("/:reviewId/edit", async (req, res) => {
+  try {
+    const review = await Review.findById(req.params.reviewId);
+
+    return res.render("reviews/edit.ejs", { review: review });
+  } catch {
+    if (error) return console.log(error);
+  }
+});
+
+//update
+router.put("/:reviewId", async (req, res) => {
+  try {
+    await Review.findByIdAndUpdate(
+      req.params.reviewId,
+      {
+        $set: req.body,
+      },
+      {
+        new: true,
+      }
+    );
     return res.redirect("/reviews");
-  });
+  } catch (error) {
+    return console.log(error);
+  }
 });
 
 /* delete */
@@ -42,15 +61,12 @@ router.delete("/:id", async (req, res, next) => {
   try {
     await Review.findByIdAndDelete(req.params.id);
     return res.redirect("back");
+  } catch (error) {
+    console.log(error);
+    req.error = error;
+    return next();
   }
-  catch(error){
-      console.log(error);
-      req.error = error;
-      return next();
-    }
-
 });
-
 
 //seed data - add in own product ID
 // Review.deleteMany({}, function (error, deletedReviews) {

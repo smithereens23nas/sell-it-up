@@ -124,12 +124,12 @@
               <section class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link"></a>
                 <div class="navbar-dropdown">
-                  <a class="button is-primary m-2 navbar-item"> Edit </a>
+                  <a class="button is-primary m-2 navbar-item" href="/reviews/<%= review.id %>/edit">Edit Review</a>                    
+              
                   <hr class="navbar-divider" />
                     <form action="/reviews/<%= review._id %>?_method=DELETE" method="POST">
-                      <input class="button is-danger m-2 navbar-item" type="submit" value="	Delete"/>                    
+                     <button class="button is-danger m-2 navbar-item">Delete</button>          
                     </form>
-                    </p>
                   <!-- <a class="button is-danger m-2 navbar-item">Remove</a> -->
                 </div>
               </section>
