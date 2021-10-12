@@ -11,7 +11,6 @@ const PORT = 4000;
 // Run my express dependency
 const app = express();
 
-
 /* == App configs == */
 app.set('view engine', 'ejs');
 
@@ -55,6 +54,9 @@ app.use((req, res, next) => {
 app.get('/', function (req, res) {
     res.redirect('/products');
 });
+
+/* == use controllers == */
+app.use("/products", controllers.product);
 
 
 /* == 404 == */

@@ -5,17 +5,19 @@ const { Product, Review } = require("../models");
 /* == Producs Routes == */
 
 /* == index route == */
-router.get('/', function (req, res) {
-
-  Product.find({}, (error, products) => {
-    if (error) return console.log(error);
-
+router.get('/', async function (req, res) {
+  try {
+    const products = await Product.find({});
+  
     const context = {
-        products,
+      products,
     }
-
+    
     res.render('products/index', context);
-  });
+
+  } catch (error) {
+    return console.log(error);
+  }
 });
 
 // This is the page to our form to create a new product! :)
@@ -24,45 +26,46 @@ router.get('/new', (req, res) => {
 });
 
 // This is the post request coming from my newForm
-router.post('/', (req, res) => {
-  console.log('req.body:', req.body);
- Product.create( req.body, (error, createdProduct) => {
-    if (error) return console.log(error);
+router.post('/', async (req, res) => {
+  try {
+    await Product.create( req.body )
 
-    console.log(createdProduct);
-  
     return res.redirect('/products');
-  });
+  } catch (error) {
+    return console.log(error);
+  }
 });
 
 /* == Show == */
-router.get("/:id", (req, res, next) => {
-  Product.findById(req.params.id, (error, foundProduct) => {
-    if (error) {
-      console.log(error);
-      req.error = error;
-      return next();
-    }
-    // Here we are finding all the reviews where the product is 
-    //equal to the param
-    Review.find({ product: req.params.id }, (error, allReviews) => {
-      const context = {
-        product: foundProduct,
-        reviews: allReviews,
-      };
+router.get("/:id", async (req, res, next) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    const reviews = await Review.find({ product: req.params.id }).populate('product'); 
+    
+    const context = {
+      product,
+      reviews,
+    };
 
-      return res.render("products/show.ejs", context);
-    });
-  });
+    return res.render("products/show.ejs", context);
+
+  } catch (error) {
+    console.log(error);
+    req.error = error;
+    return next();
+  }
 });
 
 // edit route
-router.get('/:productId/edit', (req, res) => {
-    Product.findById(req.params.productId, (error, foundItem) => {
-        if (error) return console.log(error);
+router.get('/:productId/edit', async (req, res) => {
+  try {  
+    const product = await Product.findById(req.params.productId)
+    return res.render('edit.ejs', { product });
     
-        return res.render('edit.ejs', { product: foundItem });
-    });
+  } catch (error) {
+    return console.log(error)
+  }
+
 });
 
 /* Update */

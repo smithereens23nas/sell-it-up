@@ -1,51 +1,51 @@
 <!DOCTYPE html>
 <html>
 
-	<!-- head -->
-	<%- include( 'partials/head.ejs' )  %>
+<!-- head -->
+<%- include( 'partials/head.ejs' , {page: 'new' } ) %>
 
-<body class="has-navbar-fixed-top">
-  <!-- https://bulma.io/documentation/components/navbar/#fixed-navbar -->
-  <%- include ( 'partials/nav.ejs', { page: 'New' } ) %>
+  <body class="has-navbar-fixed-top">
+    <!-- https://bulma.io/documentation/components/navbar/#fixed-navbar -->
+    <%- include ( 'partials/nav.ejs' , { page: 'New' } ) %>
 
-  <section class="hero is-medium has-background-light">
-    <div class="hero-body">
-      <h1 class="title">New Product page</h1>
-    </div>
-  </section>
-  <section class="container is-max-widescreen p-5">
-    <!--  NOTE: action will be the route, method will be the HTTP verb-->
-    <form action="/products" method="POST">
-      <div class="field">
-        <!-- This is for our name with the type and placeholder -->
-        <label class="label">Product Name</label>
-        <div class="control">
-          <input class="input" type="text" placeholder="Super Cool Product" name="name" />
+      <section class="hero is-medium has-background-light">
+        <div class="hero-body">
+          <h1 class="title">New Product page</h1>
         </div>
-      </div>
+      </section>
+      <section class="container is-max-widescreen p-5">
+        <!--  NOTE: action will be the route, method will be the HTTP verb-->
+        <form action="/products" method="POST">
+          <div class="field">
+            <!-- This is for our name with the type and placeholder -->
+            <label class="label">Product Name</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Super Cool Product" name="name" />
+            </div>
+          </div>
 
-      <div class="field">
-        <!-- This is for our product's price with type and placeholder -->
-        <label class="label">Product Price</label>
-        <div class="control">
-          <input class="input" type="number" placeholder="32" name="price" />
-        </div>
-      </div>
+          <div class="field">
+            <!-- This is for our product's price with type and placeholder -->
+            <label class="label">Product Price</label>
+            <div class="control">
+              <input class="input" type="number" placeholder="32" name="price" />
+            </div>
+          </div>
 
-      <div class="field">
-        <label class="label">Product Image</label>
-        <div class="control">
-          <input class="input" type="text" placeholder="http://" name="image" />
-        </div>
-      </div>
+          <div class="field">
+            <label class="label">Product Image</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="http://" name="image" />
+            </div>
+          </div>
 
-      <div class="field is-grouped">
-        <div class="control">
-          <button class="button is-info">Create Product</button>
-        </div>
-      </div>
-    </form>
-  </section>
-</body>
+          <div class="field is-grouped">
+            <div class="control">
+              <button class="button is-info">Create Product</button>
+            </div>
+          </div>
+        </form>
+      </section>
+  </body>
 
 </html>
