@@ -18,21 +18,6 @@ app.set('view engine', 'ejs');
 /* == middlewares == */
 app.use(express.static('public'))
 
-/* = this should be near the top, above the routes == */
-app.use(express.urlencoded({ extended: false }));
-
-app.use(methodOverride('_method'));
-
-/* == use controllers == */
-app.use("/products", controllers.product);
-app.use("/", controllers.user)
-
-/* == logger == */
-app.use((req, res, next) => {    
-    console.log(`[${req.url}] ${req.method} - ${new Date().toLocaleTimeString()}`);
-	next();
-});
-
 app.use(
     session(
         {
@@ -50,6 +35,21 @@ app.use(
         }
     )
 );
+
+/* = this should be near the top, above the routes == */
+app.use(express.urlencoded({ extended: false }));
+
+app.use(methodOverride('_method'));
+
+/* == use controllers == */
+app.use("/products", controllers.product);
+app.use("/", controllers.user)
+
+/* == logger == */
+app.use((req, res, next) => {    
+    console.log(`[${req.url}] ${req.method} - ${new Date().toLocaleTimeString()}`);
+	next();
+});
 
 /* == Routes == */
 app.get('/', function (req, res) {
